@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>API Users</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <br><br>
+    <button id = "grab">Load Github Users</button> <br><br>
+    <h1>Github Users</h1>
+    <section id = "show"></section>
+
+    <script>
+        document.getElementById('grab').addEventListener('click', loadm );
+
+        function loadm(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.github.com/users');
+            xhr.onload = function(){
+                if(xhr.status == 200){
+                    var users = JSON.parse(xhr.responseText);
+                    
+                    var output = '';
+
+                    for(var i in users){
+                        output +=
+                        '<div class="container pt-2" style="width: 40rem;">'+
+                        '<div class="card bg-light text-dark">'+
+                        '<div class="card-body">'+
+                        '<ul class="list-group list-group-horizontal">' +
+                        '<img src="'+users[i].avatar_url+'"width="100" height="100">' +
+                        '<ul>' +  
+                        '<li>ID: '+users[i].id+'</li>' +
+                        '<li>Login: '+users[i].login+'</li>' +
+                        '</ul>' +
+                        '</ul>' +
+                        '</div>'+
+                        '</div>'+
+                        '</div>';
+                            
+                    }
+                    document.getElementById('show').innerHTML = output;
+                }
+            }
+            xhr.send();
+        }
+
+    </script>
+</body>
+</html>
